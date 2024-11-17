@@ -1,0 +1,49 @@
+11.1
+
+def mean_end_analysis(initial_string, goal_string):
+    if initial_string == goal_string:
+        print("No transformation needed, both strings are the same.")
+        return 
+    steps = []  
+    current_string = list(initial_string)  
+    for i in range(len(goal_string)):
+        if current_string[i] != goal_string[i]: 
+            current_string[i] = goal_string[i]  
+            steps.append(f"Replace {initial_string[i]} with {goal_string[i]} at index {i}")
+    final_string = ''.join(current_string)
+    print(f"Initial String: {initial_string}")
+    print(f"Goal String: {goal_string}")
+    print("Transformation Steps:")
+    for step in steps:
+        print(step)
+    print(f"Final String: {final_string}")
+initial_string = "abcde"
+goal_string = "axcye"
+mean_end_analysis(initial_string, goal_string)
+
+
+11.2
+from collections import defaultdict
+
+jug1, jug2, aim = 4,3,2
+visited = defaultdict(lambda: False)
+
+def waterJugSolver(amt1, amt2):
+    if (amt1 == aim and amt2 == 0) or (amt2 == aim and amt1 == 0):
+        print(amt1, amt2)
+        return True
+    if visited[(amt1, amt2)] == False:
+        print(amt1, amt2)
+        visited[(amt1, amt2)] = True
+        return (waterJugSolver(0, amt2) or 
+                waterJugSolver(amt1, 0) or 
+                waterJugSolver(jug1, amt2) or 
+                waterJugSolver(amt1, jug2) or 
+                waterJugSolver(amt1 + min(amt2, (jug1-amt1)), amt2 - min(amt2, (jug1-amt1))) or 
+                waterJugSolver(amt1 - min(amt1, (jug2-amt2)), amt2 + min(amt1, (jug2-amt2))))
+    return False
+
+print("Steps:")
+if not waterJugSolver(0, 0):
+    print("Solution not possible")
+

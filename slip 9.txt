@@ -1,0 +1,127 @@
+9.1
+
+import heapq
+def manhattan_distance(state, goal):
+    distance = 0
+    for i in range(3):
+        for j in range(3):
+            if state[i][j] != 0:
+                x, y = divmod(goal.index(state[i][j]), 3)
+                distance += abs(x - i) + abs(y - j)
+    return distance
+def get_neighbors(state):
+    neighbors = []
+    x, y = next((i, j) for i in range(3) for j in range(3) if state[i][j] == 0)
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+    for dx, dy in directions:
+        nx, ny = x + dx, y + dy
+        if 0 <= nx < 3 and 0 <= ny < 3:
+            new_state = [row[:] for row in state]
+            new_state[x][y], new_state[nx][ny] = new_state[nx][ny], new_state[x][y]
+            neighbors.append(new_state)
+
+    return neighbors
+def state_to_tuple(state):
+    return tuple(tuple(row) for row in state)
+def a_star(start, goal):
+    open_list = []
+    heapq.heappush(open_list, (0, start, 0))
+    came_from = {state_to_tuple(start): None}
+    cost_so_far = {state_to_tuple(start): 0}
+
+    while open_list:
+        _, current, g = heapq.heappop(open_list)
+
+        if current == goal:
+            path = []
+            while current:
+                path.append(current)
+                current = came_from[state_to_tuple(current)]
+            return path[::-1]
+
+        for neighbor in get_neighbors(current):
+            new_cost = g + 1
+            neighbor_tuple = state_to_tuple(neighbor)
+
+            if neighbor_tuple not in cost_so_far or new_cost < cost_so_far[neighbor_tuple]:
+                cost_so_far[neighbor_tuple] = new_cost
+                priority = new_cost + manhattan_distance(neighbor, sum(goal, []))
+                heapq.heappush(open_list, (priority, neighbor, new_cost))
+                came_from[neighbor_tuple] = current
+    return None
+def print_state(state):
+    for row in state:
+        print(row)
+    print()
+if __name__ == "__main__":
+    start_state = [
+        [1, 2, 3],
+        [4, 0, 5],
+        [7, 8, 6]
+    ]
+
+    goal_state = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 0]
+    ]
+
+    solution = a_star(start_state, goal_state)
+
+    if solution:
+        print("Solution found:")
+        for step in solution:
+            print_state(step)
+    else:
+        print("No solution exists.")
+
+9.2
+
+from collections import deque
+def is_goal(jug1, jug2):
+    return jug2 == 4
+def get_next_states(jug1, jug2, max1, max2):
+    states = []
+    states.append((max1, jug2))
+    states.append((jug1, max2))
+    states.append((0, jug2))
+    states.append((jug1, 0))
+    pour1to2 = min(jug1, max2 - jug2)
+    states.append((jug1 - pour1to2, jug2 + pour1to2))
+    pour2to1 = min(jug2, max1 - jug1)
+    states.append((jug1 + pour2to1, jug2 - pour2to1))
+
+    return states
+def solve_water_jug(max1, max2):
+    visited = set()
+    queue = deque([(0, 0)])  
+    path = {}
+
+    while queue:
+        jug1, jug2 = queue.popleft()
+        if is_goal(jug1, jug2):
+            result_path = []
+            while (jug1, jug2) in path:
+                result_path.append((jug1, jug2))
+                jug1, jug2 = path[(jug1, jug2)]
+            result_path.append((jug1, jug2))
+            return result_path[::-1]
+        visited.add((jug1, jug2))
+        for next_jug1, next_jug2 in get_next_states(jug1, jug2, max1, max2):
+            if (next_jug1, next_jug2) not in visited:
+                queue.append((next_jug1, next_jug2))
+                path[(next_jug1, next_jug2)] = (jug1, jug2)
+
+    return None
+if __name__ == "__main__":
+    max1 = 5  
+    max2 = 7  
+    solution = solve_water_jug(max1, max2)
+
+    if solution:
+        print("Solution found:")
+        for step in solution:
+            print(f"Jug 1: {step[0]} gallons, Jug 2: {step[1]} gallons")
+    else:
+        print("No solution exists.")

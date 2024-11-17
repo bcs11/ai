@@ -1,0 +1,41 @@
+1.1
+def.f(x):
+    return -x**2 + 4*x  
+def hill_climbing(starting_point, step_size, iterations):
+    current = sstarting_point
+    for _ in range(iterations):
+        next_point = current + step_size
+        if f(next_point) > f(current):  
+            current = next_point
+        else: 
+            break
+    return current, f(current)
+starting_point = 0  
+step_size = 0.1    
+iterations = 100  
+maximum_x, maximum_y = hill_climbing(starting_point, step_size, iterations)
+print(f"The maximum value of the function is at x = {maximum_x}, f(x) = {maximum_y}")
+
+1.2
+graph = {
+    '1':['2','3'],
+    '2':['4','5'],
+    '3':['6','7'],
+    '4':['8'],
+    '5':['8'],
+    '6':['8'],
+    '7':['8'],
+    '8':[]
+}
+
+visited = set()
+def dfs(visited, graph, node):
+  if node not in visited:
+     print (node)
+     visited.add(node)
+     for neighbour in graph[node]:
+         dfs(visited, graph, neighbour)
+print("Following is the Depth-First Search")
+dfs(visited, graph, '1')
+
+

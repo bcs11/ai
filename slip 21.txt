@@ -1,0 +1,31 @@
+21.1
+
+import string
+def remove_punctuation(input_string):
+    return ''.join(char for char in input_string if char not in string.punctuation)
+input_string = input("Enter a string: ")
+result = remove_punctuation(input_string)
+print("String without punctuation:", result)
+
+
+21.2
+
+from itertools import permutations
+def solve_cryptarithmetic():
+    letters = 'GOTU'
+    for perm in permutations(range(10), len(letters)):
+        mapping = dict(zip(letters, perm))
+        if mapping['G'] == 0 or mapping['T'] == 0:
+            continue
+        GO = mapping['G'] * 10 + mapping['O']
+        TO = mapping['T'] * 10 + mapping['O']
+        OUT = mapping['O'] * 100 + mapping['U'] * 10 + mapping['T']
+        if GO + TO == OUT:
+            print("Solution found!")
+            print(f"GO: {GO}, TO: {TO}, OUT: {OUT}")
+            print(f"Mapping: {mapping}")
+            return
+
+    print("No solution found.")
+if __name__ == "__main__":
+    solve_cryptarithmetic()

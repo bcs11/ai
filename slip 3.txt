@@ -1,0 +1,28 @@
+3.1
+import string
+def remove_punctuation(input_string):
+    return ''.join(char for char in input_string if char not in string.punctuation)
+input_string = input("Enter a string: ")
+result = remove_punctuation(input_string)
+print("String without punctuation:", result)
+
+3.2
+graph = {
+    '1':['2','3','4'],
+    '2':['1','4','5'],
+    '3':['1','4'],
+    '4':['1','2','3','7'],
+    '5':['2','6','7'],
+    '6':['5','7'],
+    '7':['6','5','4']
+}
+
+visited = set() 
+def dfs(visited, graph, node): 
+  if node not in visited:
+     print (node)
+     visited.add(node)
+     for neighbour in graph[node]:
+         dfs(visited, graph, neighbour)
+print("Following is the Depth-First Search")
+dfs(visited, graph, '2')

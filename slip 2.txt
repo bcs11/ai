@@ -1,0 +1,29 @@
+2
+import calendar
+def generate_calendar(year, month):
+    print(calendar.month(year, month))
+year = int(input("Enter the year: "))
+month = int(input("Enter the month (1-12): "))
+generate_calendar(year, month)
+
+2.2
+
+graph = {
+    '1':['2','3'],
+    '2':['4'],
+    '3':['2'],
+    '4':['5','6'],
+    '5':['7','3'],
+    '6':[ ],
+    '7':['6'],
+}
+
+visited = set()
+def dfs(visited, graph, node):
+  if node not in visited:
+     print (node)
+     visited.add(node)
+     for neighbour in graph[node]:
+         dfs(visited, graph, neighbour)
+print("Following is the Depth-First Search")
+dfs(visited, graph, '1')

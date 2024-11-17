@@ -1,0 +1,44 @@
+18.1
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+stop_words = set(stopwords.words('english'))
+def remove_stop_words(file_path):
+    with open(file_path, 'r') as file:
+        text = file.read()  
+    words = word_tokenize(text)
+    filtered_words = [word for word in words if word.lower() not in stop_words]
+    filtered_text = ' '.join(filtered_words)  
+    return filtered_text
+file_path = input("Enter the path to the text file: ")
+result = remove_stop_words(file_path)
+print("Text after removing stop words:\n")
+print(result)
+
+
+18.2
+
+def function(x):
+    return -x**2 + 4*x
+def hill_climbing(initial_x, step_size, max_iterations):
+    x = initial_x  
+    for _ in range(max_iterations):
+        current_value = function(x)
+        next_x_pos = x + step_size
+        next_x_neg = x - step_size 
+        next_value_pos = function(next_x_pos)
+        next_value_neg = function(next_x_neg)
+        if next_value_pos > current_value:
+            x = next_x_pos
+        elif next_value_neg > current_value:
+            x = next_x_neg
+        else:
+            print(f"Maximum found at x = {x} with value = {current_value}")
+            return x, current_value
+    print(f"Maximum found at x = {x} with value = {function(x)}")
+    return x, function(x)
+initial_x = 0  
+step_size = 0.1  
+max_iterations = 100 
+hill_climbing(initial_x, step_size, max_iterations)

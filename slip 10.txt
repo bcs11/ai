@@ -1,0 +1,45 @@
+10.1
+
+from itertools import permutations
+
+def is_valid_solution(assignment):
+    T, O, W, U,F,R = assignment['T'], assignment['O'], assignment['W'], assignment['U'], assignment['F'], assignment['R']
+    TWO =  100 * T +10* W+ O
+    TWO = 100 * T +10* W+ O
+    FOUR = 1000 * F + 100 * O + 10* U+R
+    return (TWO + TWO) == FOUR
+
+letters = 'TOWUFR'
+for perm in permutations(range(10), len(letters)):
+    assignment = dict(zip(letters, perm))
+    if is_valid_solution(assignment):
+        print(f"Solution: T={assignment['T']}, O={assignment['O']}, T={assignment['W']}, U={assignment['U']}, F={assignment['F']}, R={assignment['R']}")
+        break
+else:
+    print("No solution found")
+
+
+10.2
+
+def chatbot():
+    print("Hello! I am your friendly chatbot. Type 'exit' to end the conversation.")
+    
+    while True:
+        user_input = input("You: ").lower()
+
+        if user_input == 'exit':
+            print("Goodbye! Have a nice day.")
+            break
+        
+        elif 'how are you' in user_input:
+            print("Chatbot: I'm doing great, thank you for asking!")
+        elif 'hello' in user_input or 'hi' in user_input:
+            print("Chatbot: Hello! How can I assist you today?")
+        elif 'your name' in user_input:
+            print("Chatbot: I am a simple chatbot. I don't have a name, but you can call me Chatbot!")
+        elif 'bye' in user_input:
+            print("Chatbot: Goodbye!")
+        else:
+            print("Chatbot: I'm sorry, I don't understand that. Could you ask something else?")
+            
+chatbot()

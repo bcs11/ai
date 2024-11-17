@@ -1,0 +1,28 @@
+24.1
+
+def sort_sentence(sentence):
+    words = sentence.split()
+    words.sort()
+    sorted_sentence = ' '.join(words)    
+    return sorted_sentence
+sentence = input("Enter a sentence: ")
+sorted_sentence = sort_sentence(sentence)
+print("Sorted sentence:", sorted_sentence)
+
+24.2
+
+import itertools
+letters = 'CROSSDANGER'
+def solve_cryptarithm():
+    for perm in itertools.permutations(range(10), len(set(letters))):
+        mapping = dict(zip(set(letters), perm))
+        CROSS = mapping['C'] * 10000 + mapping['R'] * 1000 + mapping['O'] * 100 + mapping['S'] * 10 + mapping['S']
+        ROADS = mapping['R'] * 10000 + mapping['O'] * 1000 + mapping['A'] * 100 + mapping['D'] * 10 + mapping['S']
+        DANGER = mapping['D'] * 100000 + mapping['A'] * 10000 + mapping['N'] * 1000 + mapping['G'] * 100 + mapping['E'] * 10 + mapping['R']
+        if CROSS + ROADS == DANGER:
+            print("Solution found!")
+            print(f"CROSS: {CROSS}, ROADS: {ROADS}, DANGER: {DANGER}")
+            print("Letter Mapping:", mapping)
+            return
+    print("No solution found.")
+solve_cryptarithm()

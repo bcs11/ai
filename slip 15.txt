@@ -1,0 +1,60 @@
+15.1
+
+class MonkeyBananaProblem:
+    def __init__(self):
+        self.monkey_position = "ground" 
+        self.ladder_position = "ground"  
+        self.banana_position = "high"  
+    def move_monkey(self):
+        if self.monkey_position == "ground" and self.ladder_position == "ground":
+            print("Monkey is on the ground and moves toward the ladder.")
+            self.monkey_position = "ladder"
+        else:
+            print("Monkey is already on the ladder.")
+
+    def climb_ladder(self):
+        # Monkey climbs the ladder
+        if self.monkey_position == "ladder" and self.ladder_position == "ground":
+            print("Monkey climbs the ladder to reach the bananas.")
+            self.monkey_position = "high"
+        else:
+            print("Monkey is already at the top with the bananas.")
+    def reach_bananas(self):
+        if self.monkey_position == "high" and self.banana_position == "high":
+            print("Monkey reaches the bananas!")
+        else:
+            print("Monkey is not at the correct position to get the bananas.")
+    def solve_problem(self):
+        self.move_monkey()  
+        self.climb_ladder() 
+        self.reach_bananas() 
+problem = MonkeyBananaProblem()
+problem.solve_problem()
+
+
+15.2
+
+graph = {
+    'A':['B','C'],
+    'B':['D','E'],
+    'C':['F','G'],
+    'D':['H','I'],
+    'E':[ ],
+    'F':['K'],
+    'G':[ ],
+    'H':[ ],
+    'I':[ ],
+    'K':[ ]
+}
+
+visited = set() 
+
+def dfs(visited, graph, node): 
+  if node not in visited:
+     print (node)
+     visited.add(node)
+     for neighbour in graph[node]:
+         dfs(visited, graph, neighbour)
+print("Following is the Depth-First Search")
+dfs(visited, graph, 'A')
+

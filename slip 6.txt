@@ -1,0 +1,46 @@
+6.1
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+stop_words = set(stopwords.words('english'))
+def remove_stop_words(file_path):
+    with open(file_path, 'r') as file:
+        text = file.read()  
+    words = word_tokenize(text)
+    filtered_words = [word for word in words if word.lower() not in stop_words]
+    filtered_text = ' '.join(filtered_words)  
+    return filtered_text
+file_path = input("Enter the path to the text file: ")
+result = remove_stop_words(file_path)
+print("Text after removing stop words:\n")
+print(result)
+
+6.2
+
+graph ={
+    '1':['2','3','4'],
+    '2':['1','4','5'],
+    '3':['1','4'],
+    '4':['1','2','3','7'],
+    '5':['2','6','7'],
+    '6':['7','5'],
+    '7':['4','5','6'],
+}
+visited = [] 
+queue = []  
+def bfs(visited, graph, node): 
+  visited.append(node)
+  queue.append(node)
+    
+  while queue: 
+       m = queue.pop(0)
+       print (m, end = " ")
+        
+       for neighbour in graph[m]:
+          if neighbour not in visited:
+            visited.append(neighbour)
+            queue.append(neighbour)
+print("Following is the Breadth-First Search")
+bfs(visited, graph, '1') 
+
